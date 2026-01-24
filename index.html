@@ -551,7 +551,7 @@
                     <div class="result-display">
                         <span class="badge" id="lvl-badge">Cargando...</span>
                         <h2 id="lvl-name">Tu Perfil de Liderazgo</h2>
-                        <p id="lvl-desc" style="margin-bottom: 2rem;"></p>
+                        <p id="lvl-desc" style="margin-bottom: 1.5rem;"></p>
 
                         <!-- Common Challenges Section -->
                         <div
@@ -1163,19 +1163,20 @@
                 y += 10;
             }
 
-            // Draw Button
+            // Draw Button - Cleaner and smaller
             doc.setFillColor(30, 58, 138); // Primary
-            doc.roundedRect(20, y, 170, 15, 3, 3, 'F');
+            doc.roundedRect(40, y, 130, 12, 2, 2, 'F'); // Smaller width and height
 
             doc.setTextColor(255, 255, 255);
-            doc.setFontSize(12);
+            doc.setFontSize(11);
             doc.setFont("helvetica", "bold");
-            doc.text("👉 Conocer el sistema completo OKRs con Propósito", 105, y + 10, { align: "center" });
+            // Removed emoji to prevent encoding issues
+            doc.text("Conocer el sistema completo OKRs con Propósito", 105, y + 8, { align: "center" });
 
             // Add link annotation over the button area
-            doc.link(20, y, 170, 15, { url: "https://cyndidelatorre-stack.github.io/Diagn-sticoOKRs/#tools" });
+            doc.link(40, y, 130, 12, { url: "https://cyndidelatorre-stack.github.io/Diagn-sticoOKRs/#tools" });
 
-            doc.save("Plan_Accion_OKRs_Propisito.pdf");
+            doc.save("Plan_Accion_OKRs_Proposito.pdf"); // Removed accent from filename for safety
         }
     </script>
 </body>
