@@ -8,12 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
         rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
-            --primary: #1e3a8a;
+            --primary: #1D4D4F;
             --primary-light: #3b82f6;
             --accent: #d4af37;
             --text-main: #334155;
@@ -42,7 +42,11 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             color: var(--text-main);
-            background-color: var(--bg-soft);
+            background-color: #f8fafc;
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(29, 77, 79, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 85% 90%, rgba(29, 77, 79, 0.03) 0%, transparent 30%);
+            background-attachment: fixed;
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -51,7 +55,7 @@
         h2,
         h3,
         h4 {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Playfair Display', serif;
             color: var(--text-heading);
             font-weight: 700;
             line-height: 1.2;
@@ -78,8 +82,14 @@
 
         nav .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            position: relative;
+        }
+
+        .nav-links {
+            position: absolute;
+            right: 0;
         }
 
         .logo {
@@ -119,7 +129,7 @@
             align-items: center;
             justify-content: center;
             padding: 0.875rem 2rem;
-            border-radius: var(--radius-md);
+            border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
@@ -339,14 +349,49 @@
         }
 
         .product-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-lg);
-            padding: 3rem;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+            border-radius: 12px;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: var(--text-main);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card h3 {
+            color: var(--primary);
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .product-card p {
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .product-card.featured {
+            transform: scale(1.15);
+            z-index: 10;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .product-card.featured {
+                transform: scale(1.02);
+            }
         }
 
         .product-card h3 {
@@ -420,6 +465,54 @@
         .hidden {
             display: none !important;
         }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            background: #cbd5e1;
+        }
+
+        .role {
+            color: var(--primary);
+            font-size: 0.85rem;
+            /* 13-14px */
+            font-weight: 600;
+            display: block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 4rem;
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+
+        .logo-placeholder {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #64748b;
+        }
     </style>
 </head>
 
@@ -447,9 +540,13 @@
             <h1>De Checklist a Brújula: <br>Transforma tu Liderazgo</h1>
             <p>Descubre el estado real de tu gestión por objetivos y obtén un plan de acción a la medida para conectar
                 la estrategia con el propósito de tu empresa.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
-                <a href="#diagnostic" class="btn btn-primary">Comenzar Diagnóstico gratuito</a>
-                <a href="#tools" class="btn btn-outline">Conocer más herramientas</a>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="#diagnostic" class="btn btn-primary">Comenzar Diagnóstico gratuito</a>
+                    <a href="#tools" class="btn btn-outline">Conocer más herramientas</a>
+                </div>
+                <p style="font-size: 0.875rem; font-weight: 300; margin-top: 0.5rem; opacity: 0.9;">Toma menos de 2
+                    minutos</p>
             </div>
         </div>
     </section>
@@ -636,25 +733,50 @@
 
     <section class="info-section">
         <div class="container">
+            <div class="section-header">
+                <span class="badge">Social Proof</span>
+                <h2>La Transformación es Real</h2>
+                <p>Lo que dicen quienes ya pasaron de la operación a la estrategia.</p>
+            </div>
+
             <div class="grid-3">
-                <div style="grid-column: span 2;">
-                    <h2>¿Es esto para ti?</h2>
-                    <div style="margin-top: 2rem; display: grid; gap: 1rem;">
-                        <p><strong>SÍ</strong> es para líderes que sienten que su equipo cumple tareas pero no vibra con
-                            los objetivos.</p>
-                        <p><strong>SÍ</strong> es para quienes están cansados de ser "policías" del rendimiento y
-                            quieren ser arquitectos del futuro.</p>
-                        <p><strong>SÍ</strong> es para quienes creen que los resultados y el bienestar pueden ir de la
-                            mano.</p>
-                        <p style="color: #94a3b8; margin-top: 1rem;"><em>NO es para quienes buscan fórmulas mágicas de
-                                24 horas o más burocracia.</em></p>
-                    </div>
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <img src="https://ui-avatars.com/api/?name=Ana+G&background=1D4D4F&color=fff" alt="Ana G."
+                        class="avatar">
+                    <h4 style="margin-bottom: 0.25rem;">Ana García</h4>
+                    <span class="role">CEO Startup Fintech</span>
+                    <p style="font-style: italic; color: var(--text-main);">"Convertí a mi equipo de un grupo que
+                        reportaba tareas, a una tribu alineada con una misión. El cambio fue inmediato."</p>
                 </div>
-                <div class="feature-card" style="background: var(--primary); color: white;">
-                    <h3 style="color: white; margin-bottom: 1rem;">La Transformación</h3>
-                    <p style="color: white; font-style: italic; font-size: 1.125rem;">"Convertí a mi equipo de un grupo
-                        de personas que reportaban tareas, a una tribu alineada con una misión."</p>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <img src="https://ui-avatars.com/api/?name=Carlos+M&background=1D4D4F&color=fff" alt="Carlos M."
+                        class="avatar">
+                    <h4 style="margin-bottom: 0.25rem;">Carlos Méndez</h4>
+                    <span class="role">Líder de Estrategia</span>
+                    <p style="font-style: italic; color: var(--text-main);">"Por fin entendí cómo conectar los OKRs con
+                        el día a día. Dejamos de verlos como burocracia y ahora son nuestra brújula."</p>
                 </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <img src="https://ui-avatars.com/api/?name=Laura+R&background=1D4D4F&color=fff" alt="Laura R."
+                        class="avatar">
+                    <h4 style="margin-bottom: 0.25rem;">Laura Ruiz</h4>
+                    <span class="role">Directora de RH</span>
+                    <p style="font-style: italic; color: var(--text-main);">"La herramienta de diagnóstico nos abrió los
+                        ojos. El plan de 7 días nos dio victorias rápidas que motivaron a todos."</p>
+                </div>
+            </div>
+
+            <div class="logo-row">
+                <!-- Placeholder Logos -->
+                <div class="logo-placeholder">HOTMART</div>
+                <div class="logo-placeholder">TECNOLÓGICO DE MONTERREY</div>
+                <div class="logo-placeholder">FORBES</div>
+                <div class="logo-placeholder">ENTREPRENEUR</div>
             </div>
         </div>
     </section>
@@ -666,50 +788,52 @@
                 <p>Elige el nivel de acompañamiento que necesitas hoy para tu equipo.</p>
             </div>
 
-            <div class="grid-3">
-                <!-- Tool 1: Diagnostic -->
+            <div class="grid-3" style="align-items: center;">
+                <!-- 1. Guide / Diagnostic -->
                 <div class="product-card">
                     <div>
-                        <span class="badge">Gratuito</span>
-                        <h3>Diagnóstico de Madurez</h3>
-                        <p>Descubre en 2 minutos el nivel real de tu gestión por objetivos y recibe un reporte con un
-                            plan de acción inmediato de 7 días.</p>
+                        <img src="Diagnostico.png" alt="Diagnóstico Gratuito" onerror="this.style.display='none'">
+                        <span class="badge">Entrada</span>
+                        <h3>Guía Gratuita</h3>
+                        <p>Diagnóstico de Madurez: Descubre en 2 minutos el nivel real de tu gestión y recibe un plan
+                            inmediato.</p>
                     </div>
-                    <div style="margin-top: 2rem;">
-                        <a href="#diagnostic" class="btn btn-outline"
-                            style="width: 100%; color: white; border-color: rgba(255,255,255,0.3);">Hacer
-                            Diagnóstico</a>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="#diagnostic" class="btn btn-outline" style="width: 100%;">Hacer Diagnóstico</a>
                     </div>
                 </div>
 
-                <!-- Tool 2: Book -->
-                <div class="product-card">
+                <!-- 2. Course (Featured) -->
+                <div class="product-card featured">
                     <div>
-                        <span class="badge" style="background: rgba(212, 175, 55, 0.2); color: var(--accent);">Libro
-                            Digital</span>
-                        <h3>Ebook: OKRs con Propósito</h3>
-                        <p>La guía fundamental para comprender la metodología. Aprende a conectar la estrategia con el
-                            sentido humano y fortalece el compromiso auténtico.</p>
+                        <div
+                            style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold; white-space: nowrap;">
+                            MÁS POPULAR / Recomendado para Líderes</div>
+                        <img src="Curso.png" alt="Curso Online" onerror="this.style.display='none'">
+                        <span class="badge"
+                            style="background: var(--primary-light); color: white;">Transformación</span>
+                        <h3>Curso Online</h3>
+                        <p>De Checklist a Brújula: El programa completo con lecciones, worksheets y plan de 30 días.</p>
                     </div>
-                    <div style="margin-top: 2rem;">
-                        <a href="https://pay.hotmart.com/O102959543D" class="btn btn-primary" style="width: 100%;"
-                            target="_blank">Adquirir Ebook</a>
-                    </div>
-                </div>
-
-                <!-- Tool 3: Course -->
-                <div class="product-card"
-                    style="border-color: var(--primary-light); background: rgba(30, 58, 138, 0.2);">
-                    <div>
-                        <span class="badge">Curso Completo</span>
-                        <h3>De Checklist a Brújula</h3>
-                        <p>El programa de transformación profunda. Incluye lecciones estratégicas, worksheets
-                            interactivos y tu plan de despegue de 30 días.</p>
-                    </div>
-                    <div style="margin-top: 1rem;">
+                    <div style="margin-top: 1.5rem;">
                         <a href="#course-details" class="btn btn-primary" style="width: 100%;"
                             onclick="document.getElementById('course-details').scrollIntoView({behavior: 'smooth'})">Ver
-                            Detalles del Curso</a>
+                            Detalles</a>
+                    </div>
+                </div>
+
+                <!-- 3. Ebook -->
+                <div class="product-card">
+                    <div>
+                        <img src="Libro.png" alt="Ebook OKRs" onerror="this.style.display='none'">
+                        <span class="badge"
+                            style="background: rgba(212, 175, 55, 0.2); color: var(--accent);">Profundización</span>
+                        <h3>Ebook Digital</h3>
+                        <p>OKRs con Propósito: La guía fundamental para conectar estrategia con sentido humano.</p>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://pay.hotmart.com/O102959543D" class="btn btn-outline" style="width: 100%;"
+                            target="_blank">Adquirir Ebook</a>
                     </div>
                 </div>
             </div>
