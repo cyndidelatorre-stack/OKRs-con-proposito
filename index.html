@@ -131,18 +131,18 @@
             transition: var(--transition);
             gap: 0.5rem;
             font-size: 1rem;
+            border: none;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
-            border: none;
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
+            background: #15393a; /* Un tono más oscuro del primary */
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(29, 77, 79, 0.3);
         }
 
         .btn-outline {
@@ -228,14 +228,49 @@
         }
 
         .option-card:hover {
-            border-color: var(--primary-light);
-            background: #f1f5f9;
+            border-color: var(--primary);
+            background: #f8fafc;
         }
 
         .option-card.selected {
             border-color: var(--primary);
             background: #eff6ff;
             color: var(--primary);
+        }
+
+        /* ⚡️ Estilos Formulario Captura */
+        .lead-form {
+            background: #f8fafc;
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .lead-form label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .ws-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .ws-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 77, 79, 0.1);
         }
 
         /* Results Display */
@@ -283,6 +318,7 @@
             height: 20px;
             margin-top: 0.25rem;
             cursor: pointer;
+            accent-color: var(--primary);
         }
 
         .checklist-item.checked span {
@@ -388,23 +424,6 @@
             }
         }
 
-        .product-card h3 {
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-card ul {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .product-card ul li {
-            margin-bottom: 0.75rem;
-            display: flex;
-            gap: 0.75rem;
-            font-size: 0.9375rem;
-        }
-
         /* Guide Section */
         .guide {
             display: flex;
@@ -443,21 +462,9 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .card {
-                padding: 2rem;
-            }
-        }
-
-        .hidden {
-            display: none !important;
+            .hero h1 { font-size: 2.5rem; }
+            .section-header h2 { font-size: 2rem; }
+            .card { padding: 2rem; }
         }
 
         .testimonial-card {
@@ -504,7 +511,7 @@
                 OKRs con Propósito
             </a>
             <div class="nav-links">
-                <a href="#diagnostic" class="btn btn-primary btn-sm">Hacer Diagnóstico</a>
+                <a href="#diagnostic" class="btn btn-primary btn-sm" style="padding: 0.5rem 1rem;">Hacer Diagnóstico</a>
             </div>
         </div>
     </nav>
@@ -533,9 +540,9 @@
 
                 <div class="step active" id="step-0">
                     <h2>Diagnóstico Express de Madurez</h2>
-                    <p>Identifica en 2 minutos si tus OKRs están impulsando el crecimiento o si son una carga administrativa más.</p>
+                    <p style="margin-top: 0.5rem; margin-bottom: 2rem;">Identifica en 2 minutos si tus OKRs están impulsando el crecimiento o si son una carga administrativa más.</p>
                     <div class="options-grid">
-                        <button class="btn btn-primary" onclick="nextStep()">Iniciar Ahora</button>
+                        <button class="btn btn-primary" onclick="nextStep()" style="font-size: 1.1rem; padding: 1rem;">Iniciar Ahora</button>
                     </div>
                 </div>
 
@@ -598,6 +605,30 @@
                         </svg>
                         <h2>Calculando tu nivel de madurez...</h2>
                         <p>Analizando tus respuestas para diseñar tu plan de acción.</p>
+                    </div>
+                </div>
+
+                <div class="step" id="step-capture">
+                    <div style="text-align: center; max-width: 550px; margin: 0 auto;">
+                        <span class="badge" style="background: var(--accent); color: white;">¡Listo!</span>
+                        <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Tu mapa de ruta está calculado</h2>
+                        <p style="font-size: 1.1rem; color: var(--text-main);">Ingresa tu nombre y correo para descubrir tu perfil de liderazgo y desbloquear tu <strong>Plan de Acción de 7 días</strong>.</p>
+                        
+                        <form id="lead-form" class="lead-form" onsubmit="submitLead(event)">
+                            <label for="fname">Tu Nombre</label>
+                            <input type="text" id="fname" class="ws-input" placeholder="Ej. Ana García" required>
+                            
+                            <label for="email">Tu Correo de Trabajo</label>
+                            <input type="email" id="email" class="ws-input" placeholder="ana@tuempresa.com" required>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;">
+                                🔓 Revelar mis resultados ahora
+                            </button>
+                            
+                            <p style="font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 1.5rem; margin-bottom: 0;">
+                                🔒 100% Seguro. Cero spam, solo valor puro para tu liderazgo.
+                            </p>
+                        </form>
                     </div>
                 </div>
 
@@ -705,7 +736,7 @@
         </div>
     </section>
 
-    <section class="products-section" id="tools">
+    <section class="products-section" id="products">
         <div class="container">
             <div class="section-header">
                 <h2>Caja de Herramientas Estratégicas</h2>
@@ -725,7 +756,7 @@
                     </div>
                 </div>
 
-                <div class="product-card featured">
+                <div class="product-card featured" id="tools">
                     <div>
                         <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold; white-space: nowrap;">
                             MÁS POPULAR / Recomendado para Líderes</div>
@@ -733,9 +764,15 @@
                         <span class="badge" style="background: var(--primary-light); color: white;">Transformación</span>
                         <h3>Curso Online</h3>
                         <p>De Checklist a Brújula: El programa completo con lecciones, worksheets y plan de 30 días.</p>
+                        
+                        <ul style="margin-top: 1.5rem; text-align: left;">
+                            <li>✅ 7 Módulos de contenido</li>
+                            <li>✅ 7 Worksheets interactivas</li>
+                            <li>✅ Plantillas de Feedback</li>
+                        </ul>
                     </div>
                     <div style="margin-top: 1.5rem;">
-                        <a href="#course-details" class="btn btn-primary" style="width: 100%;" onclick="document.getElementById('course-details').scrollIntoView({behavior: 'smooth'})">Ver Detalles</a>
+                        <a href="https://pay.hotmart.com/H103887243A" class="btn btn-primary" style="width: 100%;" target="_blank">Inscribirme Ahora</a>
                     </div>
                 </div>
 
@@ -754,74 +791,6 @@
         </div>
     </section>
 
-    <section class="info-section" id="course-details" style="background: white;">
-        <div class="container">
-            <div class="section-header">
-                <span class="badge">El Programa Completo</span>
-                <h2>Más que un curso, un sistema de implementación</h2>
-                <p>Diseñado para que no solo aprendas, sino que construyas tu propio Playbook de Liderazgo mientras avanzas.</p>
-            </div>
-
-            <div class="grid-3" style="align-items: center;">
-                <div style="grid-column: span 2;">
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.75rem;">Tu Playbook Estratégico</h3>
-                    <p style="margin-bottom: 1rem; font-size: 1.1rem;">A diferencia de otros cursos donde solo consumes video, aquí <strong>construyes herramientas</strong>.</p>
-                    <p style="margin-bottom: 1rem;">En cada módulo encontrarás ejercicios interactivos integrados. Podrás tomar notas, reflexionar y responder preguntas estratégicas directamente en la plataforma.</p>
-                    <p style="margin-bottom: 2rem;">Al finalizar cada ejercicio, podrás <strong>guardar y descargar tu trabajo en PDF</strong>, creando así tu propio manual de gestión personalizado y listo para compartir con tu equipo.</p>
-
-                    <div style="background: var(--bg-soft); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--primary);">
-                        <h4 style="margin-bottom: 0.5rem;">Lo que te llevas:</h4>
-                        <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; list-style: none;">
-                            <li>✅ 7 Módulos de contenido</li>
-                            <li>✅ Diagnóstico inicial</li>
-                            <li>✅ Canvas de Propósito</li>
-                            <li>✅ Scorecard de Salud</li>
-                            <li>✅ Guiones de Feedback</li>
-                            <li>✅ Plan de 30 días</li>
-                        </ul>
-                    </div>
-                    <div style="margin-top: 2rem;">
-                        <a href="https://pay.hotmart.com/H103887243A" class="btn btn-primary" target="_blank">Inscribirme al Curso Ahora</a>
-                    </div>
-                </div>
-
-                <div class="feature-card" style="background: var(--bg-dark); color: white;">
-                    <h3 style="color: white; margin-bottom: 1.5rem;">Temario del Curso</h3>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">01</span>
-                            <span>Bienvenida y Diagnóstico de arranque</span>
-                        </li>
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">02</span>
-                            <span>El motor oculto: Motivación 3.0</span>
-                        </li>
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">03</span>
-                            <span>Alineación: Conectando Propósitos</span>
-                        </li>
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">04</span>
-                            <span>Accountability y OKR Canvas</span>
-                        </li>
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">05</span>
-                            <span>Red vs. Cascada: Agilidad real</span>
-                        </li>
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">06</span>
-                            <span>Scorecard de Salud del Equipo</span>
-                        </li>
-                        <li style="display: flex; gap: 1rem; align-items: start;">
-                            <span style="color: var(--accent); font-weight: bold;">07</span>
-                            <span>Cultura de Feedback y Legado</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="info-section">
         <div class="container">
             <div class="guide" style="justify-content: center;">
@@ -830,12 +799,9 @@
                     <h2>Conoce a Cyn de la Torre</h2>
                     <p style="font-size: 1.25rem; margin-bottom: 1.5rem;">Cyn es experta en transformar equipos a través del propósito.</p>
                     <p>Con años de experiencia acompañando a líderes y emprendedores desde el Tecnológico de Monterrey, ha decodificado por qué algunos equipos brillan y otros se apagan.</p>
-                    <p style="margin-top: 1rem; margin-bottom: 2rem;">Este curso es la síntesis de esa experiencia: pensado para líderes reales, directo y profundamente práctico.</p>
+                    <p style="margin-top: 1rem; margin-bottom: 2rem;">Este ecosistema es la síntesis de esa experiencia: pensado para líderes reales, directo y profundamente práctico.</p>
 
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="https://open.spotify.com/show/2lrWpe5uYXYfWmXozRZ9jH?si=3dd29dba94a4450a" target="_blank" class="btn btn-outline" style="font-size: 0.9rem;">
-                            🎧 Escucha el Podcast
-                        </a>
                         <a href="https://www.linkedin.com/in/cyndelatorre/" target="_blank" class="btn btn-outline" style="font-size: 0.9rem;">
                             🤝 Sigamos conectados en LinkedIn
                         </a>
@@ -856,6 +822,7 @@
         let scores = {};
         const totalSteps = 5;
 
+        // Base de datos de resultados
         const levels = {
             1: {
                 badge: "Nivel 1: Administrador de Checklists",
@@ -863,41 +830,13 @@
                 desc: "Hoy lideras desde la ejecución pura. Sientes que tu equipo es una máquina que solo responde a órdenes. Los OKRs son una tarea extra, no una solución viva.",
                 challenges: "En este nivel es muy común sentir que trabajas mucho pero no avanzas estratégicamente. Es probable que tu equipo espere instrucciones para todo, delegando en ti la carga mental completa. No es que no quieran aportar, es que el sistema actual prioriza la urgencia sobre la importancia. Muchos líderes aquí se sienten solos y agotados de ser el 'motor' único del equipo.",
                 plan: [
-                    {
-                        day: 1,
-                        text: "Pregunta a una persona: ¿Qué de lo que hiciste hoy te hace sentir orgullosa?",
-                        extended: "Día 1 - Conexión Humana\nPregunta a una persona de tu equipo qué la hizo sentir orgullosa hoy. Intención: Romper el ciclo de solo hablar de tareas y pendientes. Reflexión: ¿Cuánto de mi tiempo dedico a gestionar transacciones vs conectar con las personas? Recuerda que sin conexión no hay compromiso."
-                    },
-                    {
-                        day: 2,
-                        text: "Identifica un solo KPI y busca cuál es su impacto humano real.",
-                        extended: "Día 2 - Sentido del Trabajo\nIdentifica un KPI o métrica y busca su impacto real en las personas (cliente o equipo). Intención: Darle alma al número. Reflexión: ¿Trabajamos para mover una aguja o para impactar una vida?"
-                    },
-                    {
-                        day: 3,
-                        text: "Comparte el 'Para qué' de la semana, no solo la lista de tareas pendientes.",
-                        extended: "Día 3 - Claridad de Propósito\nAl delegar o revisar pendientes, empieza explicando 'Para qué' es importante esto. Intención: Elevar la mirada de la tarea a la contribución. Reflexión: ¿Mi equipo sabe cómo su trabajo aporta a la meta mayor?"
-                    },
-                    {
-                        day: 4,
-                        text: "Mapea quiénes son los interesados clave de tu principal objetivo actual.",
-                        extended: "Día 4 - Visión Sistémica\nHaz una lista de quiénes se benefician o afectan con tu objetivo principal. Intención: Entender el ecosistema, no solo tu silo. Reflexión: ¿A quién estoy dejando fuera de la ecuación?"
-                    },
-                    {
-                        day: 5,
-                        text: "Identifica una tarea que el equipo pueda decidir autónomamente.",
-                        extended: "Día 5 - Pequeña Autonomía\nDelega una decisión pequeña pero completa a tu equipo. Intención: Empezar a soltar el control operativo. Reflexión: ¿Qué pasaría si confío un poco más en su criterio?"
-                    },
-                    {
-                        day: 6,
-                        text: "Pide feedback sobre una reunión: ¿Fue efectiva para el propósito?",
-                        extended: "Día 6 - Espejo de Liderazgo\nAl cerrar una reunión, pregunta: '¿Esta sesión nos ayudó a avanzar o solo a reportar?'. Intención: Abrir la puerta a la mejora continua. Reflexión: ¿Son mis reuniones espacios de valor o de trámite?"
-                    },
-                    {
-                        day: 7,
-                        text: "Celebra un avance pequeño pero significativo con el equipo.",
-                        extended: "Día 7 - Celebración de Progreso\nReconoce públicamente un avance, no solo un resultado final. Intención: Construir momentum y confianza. Reflexión: ¿Estoy viendo lo bueno o solo lo que falta?"
-                    }
+                    { day: 1, text: "Pregunta a una persona: ¿Qué de lo que hiciste hoy te hace sentir orgullosa?", extended: "Día 1 - Conexión Humana\nPregunta a una persona de tu equipo qué la hizo sentir orgullosa hoy. Intención: Romper el ciclo de solo hablar de tareas y pendientes. Reflexión: ¿Cuánto de mi tiempo dedico a gestionar transacciones vs conectar con las personas? Recuerda que sin conexión no hay compromiso." },
+                    { day: 2, text: "Identifica un solo KPI y busca cuál es su impacto humano real.", extended: "Día 2 - Sentido del Trabajo\nIdentifica un KPI o métrica y busca su impacto real en las personas (cliente o equipo). Intención: Darle alma al número. Reflexión: ¿Trabajamos para mover una aguja o para impactar una vida?" },
+                    { day: 3, text: "Comparte el 'Para qué' de la semana, no solo la lista de tareas pendientes.", extended: "Día 3 - Claridad de Propósito\nAl delegar o revisar pendientes, empieza explicando 'Para qué' es importante esto. Intención: Elevar la mirada de la tarea a la contribución. Reflexión: ¿Mi equipo sabe cómo su trabajo aporta a la meta mayor?" },
+                    { day: 4, text: "Mapea quiénes son los interesados clave de tu principal objetivo actual.", extended: "Día 4 - Visión Sistémica\nHaz una lista de quiénes se benefician o afectan con tu objetivo principal. Intención: Entender el ecosistema, no solo tu silo. Reflexión: ¿A quién estoy dejando fuera de la ecuación?" },
+                    { day: 5, text: "Identifica una tarea que el equipo pueda decidir autónomamente.", extended: "Día 5 - Pequeña Autonomía\nDelega una decisión pequeña pero completa a tu equipo. Intención: Empezar a soltar el control operativo. Reflexión: ¿Qué pasaría si confío un poco más en su criterio?" },
+                    { day: 6, text: "Pide feedback sobre una reunión: ¿Fue efectiva para el propósito?", extended: "Día 6 - Espejo de Liderazgo\nAl cerrar una reunión, pregunta: '¿Esta sesión nos ayudó a avanzar o solo a reportar?'. Intención: Abrir la puerta a la mejora continua. Reflexión: ¿Son mis reuniones espacios de valor o de trámite?" },
+                    { day: 7, text: "Celebra un avance pequeño pero significativo con el equipo.", extended: "Día 7 - Celebración de Progreso\nReconoce públicamente un avance, no solo un resultado final. Intención: Construir momentum y confianza. Reflexión: ¿Estoy viendo lo bueno o solo lo que falta?" }
                 ]
             },
             2: {
@@ -906,41 +845,13 @@
                 desc: "Sabes que falta algo. Has intentado conectar objetivos, pero siguen sintiéndose como silos. Tu equipo quiere más, pero necesitan una red que los sostenga.",
                 challenges: "El reto más frecuente aquí no es la falta de voluntad, sino la fragmentación. Es frustrante ver que todos trabajan duro, pero 'cada quien rema para su lado'. Probablemente sientes que pasas mucho tiempo alineando y realineando, y que la comunicación fluye con tropezones. No es tu culpa: estás en el difícil paso de dejar la gestión por tareas para entrar a la gestión por valor.",
                 plan: [
-                    {
-                        day: 1,
-                        text: "Revisa los objetivos de otra área y encuentra un punto de contacto o apoyo.",
-                        extended: "Día 1 - Rompiendo Silos\nRevisa los objetivos de un par u otra área y busca dónde coinciden. Intención: Verse como un solo barco. Reflexión: ¿Competimos entre áreas o colaboramos para la empresa?"
-                    },
-                    {
-                        day: 2,
-                        text: "Inicia una reunión preguntando por el propósito, no solo por el avance.",
-                        extended: "Día 2 - Foco en el Norte\nArranca tu junta semanal recordando la meta trimestral antes de ver pendientes. Intención: Re-calibrar la brújula. Reflexión: ¿Lo urgente se está comiendo a lo importante?"
-                    },
-                    {
-                        day: 3,
-                        text: "Da feedback positivo basado en valores, no solo en resultados numéricos.",
-                        extended: "Día 3 - Refuerzo Cultural\nReconoce una actitud o comportamiento alineado a los valores. Intención: Validar el 'cómo' logramos las cosas. Reflexión: ¿Qué comportamientos estoy premiando inconscientemente?"
-                    },
-                    {
-                        day: 4,
-                        text: "Crea una visualización compartida de los objetivos donde todos puedan editar.",
-                        extended: "Día 4 - Transparencia Radical\nAsegura que los objetivos estén en un lugar visible para todos. Intención: La información es poder solo si se comparte. Reflexión: ¿Están los objetivos en un cajón o en la pared?"
-                    },
-                    {
-                        day: 5,
-                        text: "Define una métrica de 'salud' del equipo para este mes.",
-                        extended: "Día 5 - Cuidar al Equipo\nDefine un indicador de bienestar (ej. horas extra, estrés, ánimo). Intención: Proteger la sostenibilidad del equipo. Reflexión: ¿A qué costo estamos logrando los números?"
-                    },
-                    {
-                        day: 6,
-                        text: "Realiza un 1:1 enfocado 100% en el desarrollo de la persona.",
-                        extended: "Día 6 - Inversión en Personas\nTen una charla donde NO se hable de pendientes, solo de futuro y carrera. Intención: Demostrar que te importa la persona, no solo el recurso. Reflexión: ¿Conozco los sueños de mi gente?"
-                    },
-                    {
-                        day: 7,
-                        text: "Identifica un 'bloqueador' sistémico y propón una solución en conjunto.",
-                        extended: "Día 7 - Liderazgo de Servicio\nPregunta: '¿Qué te impide hacer tu mejor trabajo?' y ayuda a removerlo. Intención: Servir para facilitar. Reflexión: ¿Soy un facilitador o un cuello de botella?"
-                    }
+                    { day: 1, text: "Revisa los objetivos de otra área y encuentra un punto de contacto o apoyo.", extended: "Día 1 - Rompiendo Silos\nRevisa los objetivos de un par u otra área y busca dónde coinciden. Intención: Verse como un solo barco. Reflexión: ¿Competimos entre áreas o colaboramos para la empresa?" },
+                    { day: 2, text: "Inicia una reunión preguntando por el propósito, no solo por el avance.", extended: "Día 2 - Foco en el Norte\nArranca tu junta semanal recordando la meta trimestral antes de ver pendientes. Intención: Re-calibrar la brújula. Reflexión: ¿Lo urgente se está comiendo a lo importante?" },
+                    { day: 3, text: "Da feedback positivo basado en valores, no solo en resultados numéricos.", extended: "Día 3 - Refuerzo Cultural\nReconoce una actitud o comportamiento alineado a los valores. Intención: Validar el 'cómo' logramos las cosas. Reflexión: ¿Qué comportamientos estoy premiando inconscientemente?" },
+                    { day: 4, text: "Crea una visualización compartida de los objetivos donde todos puedan editar.", extended: "Día 4 - Transparencia Radical\nAsegura que los objetivos estén en un lugar visible para todos. Intención: La información es poder solo si se comparte. Reflexión: ¿Están los objetivos en un cajón o en la pared?" },
+                    { day: 5, text: "Define una métrica de 'salud' del equipo para este mes.", extended: "Día 5 - Cuidar al Equipo\nDefine un indicador de bienestar (ej. horas extra, estrés, ánimo). Intención: Proteger la sostenibilidad del equipo. Reflexión: ¿A qué costo estamos logrando los números?" },
+                    { day: 6, text: "Realiza un 1:1 enfocado 100% en el desarrollo de la persona.", extended: "Día 6 - Inversión en Personas\nTen una charla donde NO se hable de pendientes, solo de futuro y carrera. Intención: Demostrar que te importa la persona, no solo el recurso. Reflexión: ¿Conozco los sueños de mi gente?" },
+                    { day: 7, text: "Identifica un 'bloqueador' sistémico y propón una solución en conjunto.", extended: "Día 7 - Liderazgo de Servicio\nPregunta: '¿Qué te impide hacer tu mejor trabajo?' y ayuda a removerlo. Intención: Servir para facilitar. Reflexión: ¿Soy un facilitador o un cuello de botella?" }
                 ]
             },
             3: {
@@ -949,41 +860,13 @@
                 desc: "Vas por muy buen camino. Los OKRs ya son una guía. El reto ahora es la profundidad: ¿Cómo lograr que el compromiso sea 100% autónomo y el feedback fluya natural?",
                 challenges: "En este punto, el sistema funciona, pero sientes que si tú dejas de empujar, la inercia se detiene. Tu gran reto es lograr que la apropiación (ownership) sea genuina y no impuesta. Tal vez notas que el feedback sigue siendo muy 'político' o suave, y quisieras conversaciones más valientes y directas que impulsen el crecimiento real.",
                 plan: [
-                    {
-                        day: 1,
-                        text: "Deja que el equipo proponga el ajuste de una iniciativa estratégica.",
-                        extended: "Día 1 - Propiedad Compartida\nPlantea el 'Qué' y deja que el equipo defina el 'Cómo' y el 'Cuánto'. Intención: Fomentar autonomía real. Reflexión: ¿Confío en que ellos encontrarán un mejor camino?"
-                    },
-                    {
-                        day: 2,
-                        text: "Mide el 'clima' de compromiso en tu reunión semanal con una pregunta abierta.",
-                        extended: "Día 2 - Termómetro Emocional\nUsa una escala del 1-10 para medir confianza en lograr la meta. Intención: Sacar a la luz miedos ocultos. Reflexión: ¿Estamos siendo honestos o políticamente correctos?"
-                    },
-                    {
-                        day: 3,
-                        text: "Implementa feedback instantáneo (2 minutos justo después de un hito).",
-                        extended: "Día 3 - Feedback Ágil\nNo esperes a la evaluación anual. Di algo útil ahora. Intención: Normalizar la corrección y el elogio. Reflexión: ¿Es el feedback un evento o un hábito?"
-                    },
-                    {
-                        day: 4,
-                        text: "Crea un 'Canvas de Compromisos' público para el equipo.",
-                        extended: "Día 4 - Accountability Visible\nHaz visibles los compromisos de cada quien ante el grupo. Intención: La presión social positiva eleva el estándar. Reflexión: ¿Nos rendimos cuentas entre pares?"
-                    },
-                    {
-                        day: 5,
-                        text: "Rinde cuentas ante el equipo sobre tus propios objetivos como líder.",
-                        extended: "Día 5 - Vulnerabilidad\nMuestra tus propios avances y fallos ante tu equipo. Intención: Liderar con el ejemplo. Reflexión: ¿Soy capaz de decir 'me equivoqué' o 'necesito ayuda'?"
-                    },
-                    {
-                        day: 6,
-                        text: "Simplifica un proceso que esté generando fricción innecesaria.",
-                        extended: "Día 6 - Menos es Más\nElimina un reporte, junta o paso burocrático que no agrega valor. Intención: Agilidad operativa. Reflexión: ¿Estamos ocupados o productivos?"
-                    },
-                    {
-                        day: 7,
-                        text: "Mentoriza a un miembro del equipo para que facilite la próxima sesión.",
-                        extended: "Día 7 - Crear Líderes\nCede el protagonismo de la reunión. Intención: Preparar tu relevo y empoderar. Reflexión: ¿Estoy creando seguidores o nuevos líderes?"
-                    }
+                    { day: 1, text: "Deja que el equipo proponga el ajuste de una iniciativa estratégica.", extended: "Día 1 - Propiedad Compartida\nPlantea el 'Qué' y deja que el equipo defina el 'Cómo' y el 'Cuánto'. Intención: Fomentar autonomía real. Reflexión: ¿Confío en que ellos encontrarán un mejor camino?" },
+                    { day: 2, text: "Mide el 'clima' de compromiso en tu reunión semanal con una pregunta abierta.", extended: "Día 2 - Termómetro Emocional\nUsa una escala del 1-10 para medir confianza en lograr la meta. Intención: Sacar a la luz miedos ocultos. Reflexión: ¿Estamos siendo honestos o políticamente correctos?" },
+                    { day: 3, text: "Implementa feedback instantáneo (2 minutos justo después de un hito).", extended: "Día 3 - Feedback Ágil\nNo esperes a la evaluación anual. Di algo útil ahora. Intención: Normalizar la corrección y el elogio. Reflexión: ¿Es el feedback un evento o un hábito?" },
+                    { day: 4, text: "Crea un 'Canvas de Compromisos' público para el equipo.", extended: "Día 4 - Accountability Visible\nHaz visibles los compromisos de cada quien ante el grupo. Intención: La presión social positiva eleva el estándar. Reflexión: ¿Nos rendimos cuentas entre pares?" },
+                    { day: 5, text: "Rinde cuentas ante el equipo sobre tus propios objetivos como líder.", extended: "Día 5 - Vulnerabilidad\nMuestra tus propios avances y fallos ante tu equipo. Intención: Liderar con el ejemplo. Reflexión: ¿Soy capaz de decir 'me equivoqué' o 'necesito ayuda'?" },
+                    { day: 6, text: "Simplifica un proceso que esté generando fricción innecesaria.", extended: "Día 6 - Menos es Más\nElimina un reporte, junta o paso burocrático que no agrega valor. Intención: Agilidad operativa. Reflexión: ¿Estamos ocupados o productivos?" },
+                    { day: 7, text: "Mentoriza a un miembro del equipo para que facilite la próxima sesión.", extended: "Día 7 - Crear Líderes\nCede el protagonismo de la reunión. Intención: Preparar tu relevo y empoderar. Reflexión: ¿Estoy creando seguidores o nuevos líderes?" }
                 ]
             },
             4: {
@@ -992,41 +875,13 @@
                 desc: "Felicidades. Eres un Diseñador de Futuro. Tu equipo opera como una red viva inspirada por un propósito. Tu rol ahora es escalar ese impacto y dejar un legado duradero.",
                 challenges: "Tu reto paradójico es no caer en la complacencia del éxito. Cuando todo va bien, es fácil dejar de cuestionarse. El desafío es mantener el hambre de transformación y asegurar que esta cultura no dependa de ti, sino que esté tan arraigada en el ADN del equipo que trascienda tu presencia. Buscas escalar y dejar legado.",
                 plan: [
-                    {
-                        day: 1,
-                        text: "Diseña el Scorecard del próximo trimestre con enfoque 100% en impacto.",
-                        extended: "Día 1 - Visión de Legado\nDefine métricas que midan transformación, no solo transacción. Intención: Asegurar impacto a largo plazo. Reflexión: ¿Qué huella dejará este trimestre en la historia de la empresa?"
-                    },
-                    {
-                        day: 2,
-                        text: "Celebra públicamente un aprendizaje nacido de una falla o error.",
-                        extended: "Día 2 - Seguridad Psicológica\nPremia a quien se atrevió a intentar algo nuevo y falló. Intención: Fomentar innovación sin miedo. Reflexión: ¿Estamos aprendiendo más rápido que la competencia?"
-                    },
-                    {
-                        day: 3,
-                        text: "Mentoriza a otro líder de la organización en tu metodología.",
-                        extended: "Día 3 - Polinización Cruzada\nComparte tus prácticas con otros líderes fuera de tu equipo. Intención: Elevar el nivel de toda la organización. Reflexión: ¿Cómo puedo servir más allá de mi tramo de control?"
-                    },
-                    {
-                        day: 4,
-                        text: "Documenta tu 'Sistema Operativo' de equipo para que sea replicable.",
-                        extended: "Día 4 - Institucionalizar\nEscribe los rituales y principios que los hacen exitosos. Intención: Que la cultura sobreviva a las personas. Reflexión: Si me voy mañana, ¿esto se sostiene?"
-                    },
-                    {
-                        day: 5,
-                        text: "Establece una alianza estratégica basada en propósitos compartidos.",
-                        extended: "Día 5 - Ecosistema\nBusca aliados internos o externos con valores similares. Intención: Potenciar impacto por red. Reflexión: ¿Con quién podemos multiplicar nuestro propósito?"
-                    },
-                    {
-                        day: 6,
-                        text: "Inicia un proyecto de impacto social que nazca del core de tu negocio.",
-                        extended: "Día 6 - Propósito Superior\nConecta el trabajo diario con una causa mayor. Intención: Dar sentido trascendente al esfuerzo. Reflexión: ¿Cómo nuestro éxito mejora el mundo?"
-                    },
-                    {
-                        day: 7,
-                        text: "Tómate un día para visionar el legado del equipo a 3 años.",
-                        extended: "Día 7 - Estrategia Futura\nDesconéctate de la operación para soñar el futuro. Intención: Mantener el norte estratégico claro y ambicioso. Reflexión: ¿Estamos construyendo el futuro o solo reaccionando al presente?"
-                    }
+                    { day: 1, text: "Diseña el Scorecard del próximo trimestre con enfoque 100% en impacto.", extended: "Día 1 - Visión de Legado\nDefine métricas que midan transformación, no solo transacción. Intención: Asegurar impacto a largo plazo. Reflexión: ¿Qué huella dejará este trimestre en la historia de la empresa?" },
+                    { day: 2, text: "Celebra públicamente un aprendizaje nacido de una falla o error.", extended: "Día 2 - Seguridad Psicológica\nPremia a quien se atrevió a intentar algo nuevo y falló. Intención: Fomentar innovación sin miedo. Reflexión: ¿Estamos aprendiendo más rápido que la competencia?" },
+                    { day: 3, text: "Mentoriza a otro líder de la organización en tu metodología.", extended: "Día 3 - Polinización Cruzada\nComparte tus prácticas con otros líderes fuera de tu equipo. Intención: Elevar el nivel de toda la organización. Reflexión: ¿Cómo puedo servir más allá de mi tramo de control?" },
+                    { day: 4, text: "Documenta tu 'Sistema Operativo' de equipo para que sea replicable.", extended: "Día 4 - Institucionalizar\nEscribe los rituales y principios que los hacen exitosos. Intención: Que la cultura sobreviva a las personas. Reflexión: Si me voy mañana, ¿esto se sostiene?" },
+                    { day: 5, text: "Establece una alianza estratégica basada en propósitos compartidos.", extended: "Día 5 - Ecosistema\nBusca aliados internos o externos con valores similares. Intención: Potenciar impacto por red. Reflexión: ¿Con quién podemos multiplicar nuestro propósito?" },
+                    { day: 6, text: "Inicia un proyecto de impacto social que nazca del core de tu negocio.", extended: "Día 6 - Propósito Superior\nConecta el trabajo diario con una causa mayor. Intención: Dar sentido trascendente al esfuerzo. Reflexión: ¿Cómo nuestro éxito mejora el mundo?" },
+                    { day: 7, text: "Tómate un día para visionar el legado del equipo a 3 años.", extended: "Día 7 - Estrategia Futura\nDesconéctate de la operación para soñar el futuro. Intención: Mantener el norte estratégico claro y ambicioso. Reflexión: ¿Estamos construyendo el futuro o solo reaccionando al presente?" }
                 ]
             }
         };
@@ -1035,14 +890,21 @@
             document.getElementById(`step-${currentStep}`).classList.remove('active');
             currentStep++;
 
-            const next = document.getElementById(`step-${currentStep}`) || document.getElementById('step-loading');
-            next.classList.add('active');
-
-            updateProgress();
-
-            if (currentStep > totalSteps) {
-                setTimeout(showResults, 2000);
+            if (currentStep <= totalSteps) {
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+            } else {
+                // Terminan las preguntas, mostramos Loading
+                document.getElementById('step-loading').classList.add('active');
+                
+                // A los 2 segundos, pasamos a Captura de Lead
+                setTimeout(() => {
+                    document.getElementById('step-loading').classList.remove('active');
+                    const captureStep = document.getElementById('step-capture');
+                    captureStep.classList.add('active');
+                    captureStep.scrollIntoView({ behavior: 'smooth' });
+                }, 2000);
             }
+            updateProgress();
         }
 
         function selectOption(qNum, value) {
@@ -1055,7 +917,37 @@
             document.getElementById('progress-fill').style.width = `${pct}%`;
         }
 
-        function showResults() {
+        // ⚡️ CONEXIÓN SILENCIOSA A MAILCHIMP ⚡️
+        function submitLead(event) {
+            event.preventDefault(); 
+            
+            const email = document.getElementById('email').value;
+            const fname = document.getElementById('fname').value;
+            
+            // 1. Ocultamos la pantalla de captura
+            document.getElementById('step-capture').classList.remove('active');
+            
+            // 2. Construimos la URL secreta de Mailchimp (Post-JSON)
+            const mcUrl = "https://github.us18.list-manage.com/subscribe/post-json?u=95f89cb57e4d9a4e70e56c48a&id=81d996b9ed&f_id=008aa0e6f0&c=mcCallback";
+            const emailParam = "&EMAIL=" + encodeURIComponent(email);
+            const fnameParam = "&FNAME=" + encodeURIComponent(fname);
+            const honeypot = "&b_95f89cb57e4d9a4e70e56c48a_81d996b9ed="; // Trampa anti-bots
+            
+            // 3. Enviamos los datos sin recargar la página (JSONP)
+            const script = document.createElement('script');
+            script.src = mcUrl + emailParam + fnameParam + honeypot;
+            document.body.appendChild(script);
+            
+            // 4. Mostramos el resultado de inmediato
+            showFinalResults();
+        }
+
+        // Función para manejar la respuesta invisible de Mailchimp
+        window.mcCallback = function(res) {
+            console.log("Mailchimp status:", res.result);
+        };
+
+        function showFinalResults() {
             const total = Object.values(scores).reduce((a, b) => a + b, 0);
             let lvl = 1;
             if (total >= 22) lvl = 4;
@@ -1063,7 +955,7 @@
             else if (total >= 11) lvl = 2;
 
             const data = levels[lvl];
-            document.getElementById('step-loading').classList.remove('active');
+            
             const resultStep = document.getElementById('step-results');
             resultStep.classList.add('active');
 
@@ -1071,26 +963,18 @@
             document.getElementById('lvl-name').innerText = data.name;
             document.getElementById('lvl-desc').innerText = data.desc;
 
-            // New: Common Challenges
             const challengesEl = document.getElementById('lvl-challenges');
             if (challengesEl) {
                 challengesEl.innerText = data.challenges || "";
             }
 
             const planContainer = document.getElementById('plan-items');
-            // Modified to usage plan[i].text
             planContainer.innerHTML = data.plan.map((item, index) => `
                 <div class="checklist-item" id="item-${index}">
                     <input type="checkbox" onchange="toggleCheck(this, 'item-${index}')">
                     <span><strong>Día ${item.day}:</strong> ${item.text}</span>
                 </div>
-            `).join('') + `
-                <div class="checklist-item" style="border: none; background: #f0f9ff; padding: 1.5rem; border-radius: 8px; border: 1px dashed var(--primary); margin-top: 1.5rem; display: block;">
-                    <h5 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">✨ El sistema completo para tu siguiente etapa</h5>
-                    <p style="margin-bottom: 1rem; font-size: 0.95rem;">Este diagnóstico te dio claridad. El Workbook y el Curso te dan el sistema completo para sostener el cambio.</p>
-                    <a href="#products" class="btn btn-primary btn-sm" onclick="scrollToProducts()">👉 Conocer el sistema OKRs con Propósito</a>
-                </div>
-            `;
+            `).join('');
 
             resultStep.scrollIntoView({ behavior: 'smooth' });
         }
@@ -1105,20 +989,18 @@
         }
 
         function scrollToProducts() {
-            const toolsSection = document.getElementById('tools');
+            const toolsSection = document.getElementById('products');
             if (toolsSection) {
                 toolsSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
+        // Script PDF
         async function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const badge = document.getElementById('lvl-badge').innerText;
             const name = document.getElementById('lvl-name').innerText;
-
-            // Get current level data indirectly or by re-calculating (easier to just grab from DOM or store global)
-            // Storing global level would be cleaner, but recalculating is safe enough
             const total = Object.values(scores).reduce((a, b) => a + b, 0);
             let lvl = 1;
             if (total >= 22) lvl = 4;
@@ -1126,83 +1008,38 @@
             else if (total >= 11) lvl = 2;
             const data = levels[lvl];
 
-            // Estilos PDF
-            doc.setFillColor(30, 58, 138); // Primary color
+            doc.setFillColor(30, 58, 138); 
             doc.rect(0, 0, 210, 40, 'F');
-
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(22);
+            doc.setTextColor(255, 255, 255); 
+            doc.setFontSize(22); 
             doc.text("Plan de Acción: OKRs con Propósito", 20, 25);
-
-            doc.setTextColor(30, 58, 138);
-            doc.setFontSize(14);
+            doc.setTextColor(30, 58, 138); 
+            doc.setFontSize(14); 
             doc.text(badge, 20, 55);
-
-            doc.setFontSize(18);
-            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18); 
+            doc.setFont("helvetica", "bold"); 
             doc.text(name, 20, 65);
-
-            doc.setDrawColor(226, 232, 240);
+            doc.setDrawColor(226, 232, 240); 
             doc.line(20, 75, 190, 75);
-
-            doc.setTextColor(51, 65, 85);
-            doc.setFontSize(12);
-            doc.setFont("helvetica", "normal");
+            doc.setTextColor(51, 65, 85); 
+            doc.setFontSize(12); 
+            doc.setFont("helvetica", "normal"); 
             doc.text("Tu plan de 7 días para la transformación:", 20, 85);
 
             let y = 100;
-
-            // Use extended data from the levels object
-            data.plan.forEach((item, i) => {
-                if (y > 250) {
-                    doc.addPage();
-                    y = 20;
-                }
-
-                doc.setFont("helvetica", "bold");
-                doc.setFontSize(11);
-                doc.setTextColor(30, 58, 138);
-                // Title from the first line of extended or formatted
+            data.plan.forEach((item) => {
+                if (y > 250) { doc.addPage(); y = 20; }
+                doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.setTextColor(30, 58, 138);
                 const titleLine = item.extended.split('\n')[0];
-                doc.text(titleLine, 20, y);
-                y += 6;
-
-                doc.setFont("helvetica", "normal");
-                doc.setFontSize(10);
-                doc.setTextColor(51, 65, 85);
-
-                // Content (rest of the extended text)
+                doc.text(titleLine, 20, y); y += 6;
+                doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(51, 65, 85);
                 const contentText = item.extended.substring(titleLine.length).trim();
                 const lines = doc.splitTextToSize(contentText, 170);
                 doc.text(lines, 20, y);
-
                 y += (lines.length * 5) + 8;
             });
-
-            // Footer CTA Button
-            if (y > 240) {
-                doc.addPage();
-                y = 40;
-            } else {
-                y += 10;
-            }
-
-            // Draw Button - Cleaner and smaller
-            doc.setFillColor(30, 58, 138); // Primary
-            doc.roundedRect(40, y, 130, 12, 2, 2, 'F'); // Smaller width and height
-
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(11);
-            doc.setFont("helvetica", "bold");
-            // Removed emoji to prevent encoding issues
-            doc.text("Conocer el sistema completo OKRs con Propósito", 105, y + 8, { align: "center" });
-
-            // Add link annotation over the button area
-            doc.link(40, y, 130, 12, { url: "https://cyndidelatorre-stack.github.io/Diagn-sticoOKRs/#tools" });
-
-            doc.save("Plan_Accion_OKRs_Proposito.pdf"); // Removed accent from filename for safety
+            doc.save("Plan_Accion_OKRs.pdf"); 
         }
     </script>
 </body>
-
 </html>
