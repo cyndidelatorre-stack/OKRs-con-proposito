@@ -917,7 +917,7 @@
             document.getElementById('progress-fill').style.width = `${pct}%`;
         }
 
-        // ⚡️ CONEXIÓN SILENCIOSA A MAILCHIMP ⚡️
+   // ⚡️ CONEXIÓN SILENCIOSA A MAILERLITE ⚡️
         function submitLead(event) {
             event.preventDefault(); 
             
@@ -927,25 +927,28 @@
             // 1. Ocultamos la pantalla de captura
             document.getElementById('step-capture').classList.remove('active');
             
-            // 2. Construimos la URL secreta de Mailchimp (Post-JSON)
-            const mcUrl = "https://github.us18.list-manage.com/subscribe/post-json?u=95f89cb57e4d9a4e70e56c48a&id=81d996b9ed&f_id=008aa0e6f0&c=mcCallback";
-            const emailParam = "&EMAIL=" + encodeURIComponent(email);
-            const fnameParam = "&FNAME=" + encodeURIComponent(fname);
-            const honeypot = "&b_95f89cb57e4d9a4e70e56c48a_81d996b9ed="; // Trampa anti-bots
+            // 2. Preparamos los datos para MailerLite
+            const mlUrl = "https://assets.mailerlite.com/jsonp/2184150/forms/181734146196899310/subscribe";
+            const formData = new FormData();
+            formData.append('fields[email]', email);
+            formData.append('fields[name]', fname);
+            formData.append('ml-submit', '1');
+            formData.append('anticsrf', 'true');
             
-            // 3. Enviamos los datos sin recargar la página (JSONP)
-            const script = document.createElement('script');
-            script.src = mcUrl + emailParam + fnameParam + honeypot;
-            document.body.appendChild(script);
+            // 3. Enviamos los datos silenciosamente (sin recargar la página)
+            fetch(mlUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Esto evita bloqueos de seguridad del navegador
+            }).then(() => {
+                console.log("Lead guardado exitosamente en MailerLite");
+            }).catch(error => {
+                console.error("Error silencioso:", error);
+            });
             
             // 4. Mostramos el resultado de inmediato
             showFinalResults();
         }
-
-        // Función para manejar la respuesta invisible de Mailchimp
-        window.mcCallback = function(res) {
-            console.log("Mailchimp status:", res.result);
-        };
 
         function showFinalResults() {
             const total = Object.values(scores).reduce((a, b) => a + b, 0);
